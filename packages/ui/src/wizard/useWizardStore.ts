@@ -61,15 +61,11 @@ export const useWizardStore = create<WizardState & WizardActions>((set, get) => 
 
   // ─── Actions ───
   setJD: (jd: JDParsed) => {
-    const visited = new Set(get().visitedSteps);
-    visited.add('blueprint');
-    set({ jd, step: 'blueprint', visitedSteps: visited, canGoBack: true, canGoForward: false });
+    set({ jd, canGoForward: true });
   },
 
   selectProject: (project) => {
-    const visited = new Set(get().visitedSteps);
-    visited.add('alignment');
-    set({ selectedProject: project, selectedProjectId: project?.id ?? null, step: 'alignment', visitedSteps: visited, canGoBack: true, canGoForward: true });
+    set({ selectedProject: project, selectedProjectId: project?.id ?? null, canGoForward: true });
   },
 
   setSelectedProjectId: (id) => set({ selectedProjectId: id }),
