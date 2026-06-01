@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>张武 — AI Agent 工程简历</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" class="icon-sprite" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="icon-print" viewBox="0 0 24 24">
+        <path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+        <path d="M6 14h12v7H6zM8 6h8M18 12h.01"/>
+      </symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.11 4.18 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.89.66 2.78a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.3-1.22a2 2 0 0 1 2.11-.45c.89.31 1.82.53 2.78.66A2 2 0 0 1 22 16.92z"/>
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+        <path d="m22 6-10 7L2 6"/>
+      </symbol>
+      <symbol id="icon-school" viewBox="0 0 24 24">
+        <path d="M22 10 12 5 2 10l10 5 10-5z"/>
+        <path d="M6 12.5V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5M22 10v6"/>
+      </symbol>
+      <symbol id="icon-briefcase" viewBox="0 0 24 24">
+        <path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+        <path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 13h18M9 13v2h6v-2"/>
+      </symbol>
+      <symbol id="icon-code" viewBox="0 0 24 24">
+        <path d="m16 18 6-6-6-6M8 6l-6 6 6 6M14 4l-4 16"/>
+      </symbol>
+      <symbol id="icon-tool" viewBox="0 0 24 24">
+        <path d="M14.7 6.3a4 4 0 0 0 5 5L11 20l-5-5 8.7-8.7z"/>
+        <path d="m7 17-3 3"/>
+      </symbol>
+    </svg>
+
+    <div class="toolbar" aria-label="简历操作">
+      <button type="button" class="print-button" onclick="window.print()">
+        <svg class="icon"><use href="#icon-print"></use></svg>
+        打印 / 导出 PDF
+      </button>
+    </div>
+
+    <main class="page" aria-label="张武简历">
+      <header class="resume-header no-photo">
+        <div class="profile-main">
+          <p class="eyebrow">AI Agent 工程 · Tool Calling · Agent Runtime · 检索增强生成</p>
+          <div class="name-row">
+            <h1>张武</h1>
+            <p class="identity-line">AI 应用开发实习生</p>
+          </div>
+          <div class="contact-line">
+            <a href="mailto:767269555@qq.com"><svg class="icon"><use href="#icon-mail"></use></svg>767269555@qq.com</a>
+            <a href="tel:18163049013"><svg class="icon"><use href="#icon-phone"></use></svg>18163049013</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- 实习经历 -->
+      <section class="section">
+        <h2><svg class="section-icon"><use href="#icon-briefcase"></use></svg>实习经历</h2>
+
+        <article class="experience">
+          <div class="entry-head">
+            <strong class="company-title">南京宽塔信息技术有限公司</strong>
+            <strong>AI 应用开发实习生</strong>
+            <span>2025.12 — 2026.04</span>
+          </div>
+
+          <h3>AIGC 智能问答平台（内部 AI 探索项目）</h3>
+          <p class="summary">
+            参与公司内部 AIGC 智能问答平台的前端核心功能开发，负责流式对话体验优化与异步状态管理。
+          </p>
+          <ul>
+            <li><strong>流式传输可靠性：</strong>对接 LLM SSE 接口，针对网络抖动导致的频繁断流，实现指数退避重连与断点续传（保留已接收 token offset），将对话中断率从约 15% 降至 2% 以内。</li>
+            <li><strong>流式渲染优化：</strong>解决 React state 高频更新导致页面帧率下降的问题，采用 ref 缓冲队列批量 flush 后提交 state 的策略，消除文本渲染抖动，长回复场景下 FPS 稳定在 55 以上。</li>
+            <li><strong>会话状态管理：</strong>封装会话状态机统一管理 streaming、tool_call、error 等异步状态，解决多轮对话并发请求下的消息错位问题；该组件覆盖 3 个业务场景并被团队复用。</li>
+          </ul>
+
+          <h3>政务与内部管理系统</h3>
+          <p class="summary">
+            参与政务管理系统与绿证管理系统的前端开发，负责审批流程抽象与配置化表单引擎建设。
+          </p>
+          <ul>
+            <li><strong>审批流程抽象：</strong>针对审批流涉及 7 种状态流转、各模块自行维护逻辑导致展示不一致的问题，抽象统一的流程状态机与枚举映射层，相关 bug 反馈减少约 60%。</li>
+            <li><strong>配置化表单引擎：</strong>面对超 40 项且因角色而异的复杂表单校验规则，封装 schema 驱动的表单引擎，将新增一套校验规则的工时从约半天压缩到 1 小时以内。</li>
+            <li><strong>核心模块交付：</strong>独立交付台账录入、交易查询等 3 个核心模块，全程参与绿证管理系统从 0 到上线的完整生命周期。</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- 项目经历 -->
+      <section class="section">
+        <h2><svg class="section-icon"><use href="#icon-code"></use></svg>项目经历</h2>
+
+        <article class="experience">
+          <div class="entry-head">
+            <strong class="project-title">AI Coding Agent</strong>
+            <strong>核心设计与实现</strong>
+            <span>个人项目</span>
+          </div>
+          <p class="summary">
+            参考 Claude Code 架构，基于 Query Loop + Tool Use 构建任务执行闭环，重点设计 Skill 路由、自进化记忆沉淀、分层上下文压缩与多 Agent 协作等机制，提升复杂任务下的执行准确率与推理效率。
+          </p>
+          <ul>
+            <li><strong>Skill 分层路由：</strong>将原子 Tool、高层 Skill 与 Skill 目录分层组织，结合任务意图识别、元信息标签与适用边界进行二阶段召回与精排，解决 Skill 增长下的检索噪声、功能重叠与 Token 成本问题。</li>
+            <li><strong>自进化记忆沉淀：</strong>将执行过程中的程序性经验、情景记忆与用户画像自动提炼为可复用资产，构建“执行—反思—提炼—分类存储—索引更新—按需复用”闭环，实现跨会话复用与错误修复加速。</li>
+            <li><strong>分层上下文压缩：</strong>将大工具结果外置化，结合缓存友好型占位压缩与结构化笔记摘要，构建“摘要预览—占位替换—按需检索—超限兜底”的上下文治理闭环，兼顾长会话稳定性与 Prompt Cache 收益。</li>
+            <li><strong>中心化多 Agent 协作：</strong>以主 Agent 统一规划与质量控制，子 Agent 以 Tool Call 方式受控执行，支持 Fork、Worktree 与 Agent Team 等协作模式，提升并行执行效率与任务安全性。</li>
+            <li><strong>多层安全审查：</strong>构建规则过滤、工具自检、AI 风险分类（prompt 注入防御）与人工确认的多层审查链路，提升 Agent 在真实开发环境下的可控性。</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- 专业技能 -->
+      <section class="section skills-section">
+        <h2><svg class="section-icon"><use href="#icon-tool"></use></svg>专业技能</h2>
+        <ul class="skills-list">
+          <li>熟悉 TypeScript / Node.js / React，具备独立交付前端模块与工程化组件的能力。</li>
+          <li>理解 LLM Agent 核心机制，包括 tool calling、function schema、规划-执行-反馈循环与错误恢复。</li>
+          <li>熟悉 RAG 基础链路，了解向量检索、关键词召回、引用溯源与知识库更新流程。</li>
+          <li>具备 Agent 工程化实践经验，了解 Skill 路由、上下文压缩、会话记忆与多 Agent 协作设计。</li>
+          <li>熟悉评测与可观测性建设，能够设计 mock provider、端到端测试用例与日志追踪体系。</li>
+          <li>熟悉 Git 工作流与前端工程化，了解 CI/CD、模块化设计与文档编写规范。</li>
+        </ul>
+      </section>
+
+      <!-- 教育背景 -->
+      <section class="section">
+        <h2><svg class="section-icon"><use href="#icon-school"></use></svg>教育背景</h2>
+        <div class="education-grid">
+          <div>沧州师范学院（本科）</div>
+          <div>通信工程</div>
+          <div>预计 2027 年毕业</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

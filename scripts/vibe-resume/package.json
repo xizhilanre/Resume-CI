@@ -1,0 +1,40 @@
+{
+  "name": "vibe-resume",
+  "version": "0.1.0",
+  "description": "A vibe coding friendly web-to-PDF resume template.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/LiuMengxuan04/vibe-resume.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LiuMengxuan04/vibe-resume/issues"
+  },
+  "homepage": "https://github.com/LiuMengxuan04/vibe-resume#readme",
+  "keywords": [
+    "resume",
+    "cv",
+    "pdf",
+    "html",
+    "css",
+    "web-to-pdf",
+    "vibe-resume",
+    "chromium",
+    "vibe-coding",
+    "ai-resume"
+  ],
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "export:pdf": "cross-env CHROME_PATH=\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" node scripts/export-pdf.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright-core": "^1.60.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
