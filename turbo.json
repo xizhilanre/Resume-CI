@@ -1,0 +1,48 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["tsconfig.base.json"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"],
+      "cache": true
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false,
+      "concurrency": 3
+    },
+    "test": {
+      "dependsOn": [],
+      "cache": true,
+      "inputs": ["src/**", "test/**", "**/*.test.*"]
+    },
+    "lint": {
+      "dependsOn": [],
+      "cache": true
+    },
+    "codegen": {
+      "dependsOn": [],
+      "outputs": [
+        "packages/core/src/schemas/generated/**",
+        "services/fastapi/app/schemas/generated/**"
+      ],
+      "cache": true
+    },
+    "desktop:package": {
+      "dependsOn": ["build", "python:runtime:build"],
+      "outputs": ["apps/desktop/dist-electron/**"],
+      "cache": false
+    },
+    "python:runtime:build": {
+      "dependsOn": [],
+      "outputs": ["python-runtime.zip"],
+      "cache": false
+    }
+  }
+}

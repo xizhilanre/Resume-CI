@@ -1,0 +1,29 @@
+{
+  "name": "resume-ci",
+  "private": true,
+  "version": "0.1.0",
+  "description": "从 JD 到一页 PDF 的全链路 AI 求职工具 — Monorepo",
+  "scripts": {
+    "dev": "concurrently -n web,desktop,fastapi -c cyan,magenta,yellow \"pnpm dev:web\" \"pnpm dev:desktop\" \"pnpm dev:fastapi\"",
+    "dev:web": "turbo run dev --filter=@resume-ci/web",
+    "dev:desktop": "turbo run dev --filter=@resume-ci/desktop",
+    "dev:fastapi": "cd services/fastapi && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "codegen": "turbo run codegen",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "prettier": "^3.4.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
