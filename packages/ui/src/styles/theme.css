@@ -1,0 +1,55 @@
+/* packages/ui/src/styles/theme.css */
+:root {
+  /* ── 品牌色 ── */
+  --accent: 217 91% 60%;
+  --accent-foreground: 0 0% 100%;
+  --accent-soft: 217 91% 97%;
+
+  /* ── 暖灰基调 ── */
+  --background: 40 20% 98%;
+  --foreground: 30 10% 12%;
+  --muted: 30 6% 55%;
+  --muted-foreground: 30 6% 35%;
+
+  /* ── 卡片 ── */
+  --card: 0 0% 100%;
+  --card-foreground: 30 10% 12%;
+
+  /* ── 圆角 ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+
+  /* ── 动效 ── */
+  --ease-spring: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ── 毛玻璃 ── */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-blur: 12px;
+  --glass-border: rgba(0, 0, 0, 0.06);
+
+  /* ── 骨架屏暖色 ── */
+  --skeleton-base: 30 10% 90%;
+  --skeleton-peak: 36 14% 94%;
+
+  /* ── 莫兰迪标签色系 ── */
+  --tag-language-bg: 210 45% 82%;
+  --tag-language-text: 215 70% 28%;
+  --tag-architecture-bg: 270 35% 85%;
+  --tag-architecture-text: 270 50% 30%;
+  --tag-middleware-bg: 155 30% 82%;
+  --tag-middleware-text: 160 55% 22%;
+  --tag-devops-bg: 25 50% 83%;
+  --tag-devops-text: 20 65% 28%;
+  --tag-concept-bg: 35 28% 84%;
+  --tag-concept-text: 32 30% 30%;
+}
+
+::selection {
+  background-color: hsl(var(--accent) / 0.2);
+  color: hsl(var(--foreground));
+}

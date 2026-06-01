@@ -13,7 +13,7 @@ describe('useWizardStore', () => {
   });
 
   it('setJD moves to blueprint', () => {
-    const jd = { keywords: [], techStack: [], roleType: 'backend', matchProfile: { score: 0.9, gaps: [] } };
+    const jd = { keywords: [{ word: 'Go', weight: 0.9, category: 'language' as const }], techStack: ['Go'], roleType: 'backend', matchProfile: { score: 0.9, gaps: [] } };
     useWizardStore.getState().setJD(jd);
     const state = useWizardStore.getState();
     expect(state.jd).toEqual(jd);
@@ -21,7 +21,7 @@ describe('useWizardStore', () => {
   });
 
   it('setJD triggers automatic step advance', () => {
-    const jd = { keywords: [], techStack: ['Go'], roleType: 'backend', matchProfile: { score: 0.8, gaps: [] } };
+    const jd = { keywords: [{ word: 'Go', weight: 0.8, category: 'language' as const }], techStack: ['Go'], roleType: 'backend', matchProfile: { score: 0.8, gaps: [] } };
     useWizardStore.getState().setJD(jd);
     expect(useWizardStore.getState().step).toBe('blueprint');
     expect(useWizardStore.getState().visitedSteps.has('blueprint')).toBe(true);
@@ -34,7 +34,7 @@ describe('useWizardStore', () => {
   });
 
   it('goBack returns to previous step', () => {
-    const jd = { keywords: [], techStack: [], roleType: 'frontend', matchProfile: { score: 1, gaps: [] } };
+    const jd = { keywords: [{ word: 'Go', weight: 0.9, category: 'language' as const }], techStack: ['Go'], roleType: 'frontend', matchProfile: { score: 1, gaps: [] } };
     useWizardStore.getState().setJD(jd);
     expect(useWizardStore.getState().step).toBe('blueprint');
     useWizardStore.getState().goBack();

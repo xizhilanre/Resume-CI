@@ -17,7 +17,7 @@ describe('WizardState', () => {
 
   it('setJD enables forward navigation', () => {
     const state = createWizardState();
-    const next = { ...state, jd: { keywords: [], techStack: [], roleType: 'frontend' as const, matchProfile: { score: 1, gaps: [] } } };
+    const next = { ...state, jd: { keywords: [{ word: 'Go', weight: 0.9, category: 'language' as const }], techStack: ['Go'], roleType: 'frontend' as const, matchProfile: { score: 1, gaps: [] } } };
     expect(canAdvanceFrom(next)).toBe(true);
   });
 

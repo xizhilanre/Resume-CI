@@ -1,18 +1,20 @@
 // packages/ui/src/wizard/WizardState.ts
 
+import type { JDParsed as JDParsedCore } from '@resume-ci/core';
+import type { ProjectCard } from '@resume-ci/core';
+
 export type WizardStep = 'anchor' | 'blueprint' | 'alignment' | 'polish' | 'export';
 
-export interface JDParsed {
-  keywords: { word: string; weight: number }[];
-  techStack: string[];
-  roleType: string;
-  matchProfile: { score: number; gaps: string[] };
-}
+// Re-export for convenience
+export type JDParsed = JDParsedCore;
 
 export interface WizardState {
   step: WizardStep;
   jd: JDParsed | null;
   selectedProject: { id: string; title: string } | null;
+  selectedProjectId: string | null;
+  projects: ProjectCard[];
+  projectsLoading: 'idle' | 'loading' | 'done';
   resumeHTML: string | null;
   canGoBack: boolean;
   canGoForward: boolean;
@@ -26,6 +28,9 @@ export function createWizardState(): WizardState {
     step: 'anchor',
     jd: null,
     selectedProject: null,
+    selectedProjectId: null,
+    projects: [],
+    projectsLoading: 'idle',
     resumeHTML: null,
     canGoBack: false,
     canGoForward: false,
