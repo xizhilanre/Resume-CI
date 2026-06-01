@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "KeywordItem": {
+      "type": "object",
+      "properties": {
+        "word": { "type": "string", "description": "关键词" },
+        "weight": { "type": "number", "description": "权重 0-1" },
+        "category": {
+          "type": "string",
+          "enum": ["language", "architecture", "middleware", "devops", "concept"],
+          "description": "分类"
+        }
+      },
+      "required": ["word", "weight", "category"]
+    },
+    "MatchProfile": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "number", "description": "综合匹配分数 0-1" },
+        "gaps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "缺失项列表"
+        }
+      },
+      "required": ["score", "gaps"]
+    },
+    "JDParsed": {
+      "type": "object",
+      "properties": {
+        "keywords": { "type": "array", "items": { "$ref": "#/$defs/KeywordItem" } },
+        "techStack": { "type": "array", "items": { "type": "string" } },
+        "roleType": { "type": "string" },
+        "matchProfile": { "$ref": "#/$defs/MatchProfile" }
+      },
+      "required": ["keywords", "techStack", "roleType", "matchProfile"]
+    },
+    "ProjectCard": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "techStack": { "type": "array", "items": { "type": "string" } },
+        "jdMatchScore": { "type": "number" },
+        "architecture": { "type": "string", "description": "Mermaid DSL" },
+        "challenges": { "type": "array", "items": { "$ref": "#/$defs/FlashCardData" } }
+      },
+      "required": ["id", "title", "description", "techStack", "jdMatchScore", "architecture", "challenges"]
+    },
+    "FlashCardData": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "codeSnippet": { "type": "string" },
+        "language": { "type": "string" }
+      },
+      "required": ["id", "question", "answer"]
+    },
+    "AlignmentQuestion": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" }
+            },
+            "required": ["id", "text"]
+          }
+        }
+      },
+      "required": ["id", "text", "options"]
+    },
+    "STARBullet": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "situation": { "type": "string" },
+        "task": { "type": "string" },
+        "action": { "type": "string" },
+        "result": { "type": "string" }
+      },
+      "required": ["id", "situation", "task", "action", "result"]
+    }
+  }
+}

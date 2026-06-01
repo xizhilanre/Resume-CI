@@ -12,6 +12,7 @@
     "@resume-ci/core": "workspace:*",
     "@resume-ci/ui": "workspace:*",
     "next": "^15.0.0",
+    "next-auth": "5.0.0-beta.31",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
