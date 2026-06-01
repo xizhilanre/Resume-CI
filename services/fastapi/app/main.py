@@ -26,6 +26,28 @@ app.add_middleware(
 
 app.include_router(ws_router, prefix="/ws")
 
+
+def _detect_chrome() -> str:
+    """Auto-detect Chrome/Chromium executable path."""
+    candidates = [
+        # Windows
+        "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+        "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+        # Linux
+        "/usr/bin/chromium",
+        "/usr/bin/chromium-browser",
+        "/usr/bin/google-chrome",
+        "/usr/bin/google-chrome-stable",
+        # macOS
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    ]
+    for path in candidates:
+        if Path(path).exists():
+            logger.info(f"Chrome detected: {path}")
+            return path
+    return ""
+
 # ─── Startup ───
 
 @app.on_event("startup")
@@ -41,12 +63,14 @@ async def startup():
     workspace = Path(os.environ.get("WORKSPACE_DIR", "data/workspace"))
     workspace.mkdir(parents=True, exist_ok=True)
 
+    chrome_path = os.environ.get("CHROME_PATH", "") or _detect_chrome()
+
     app.state.bridge = CLIBridge(
         workspace=workspace,
         tool_dir=scripts_dir / "shushu-internship-tool",
         optimizer_dir=scripts_dir / "shushu-internship-resume-optimizer",
         vibe_resume_dir=scripts_dir / "vibe-resume",
-        chrome_path=os.environ.get("CHROME_PATH", ""),
+        chrome_path=chrome_path,
     )
 
     # Health check (non-blocking)
