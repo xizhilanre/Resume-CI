@@ -1,12 +1,25 @@
 // packages/ui/src/wizard/WizardState.ts
 
-import type { JDParsed as JDParsedCore } from '@resume-ci/core';
-import type { ProjectCard } from '@resume-ci/core';
+import type { JDParsed as JDParsedCore, ProjectCard, AlignmentQuestion, STARBullet } from '@resume-ci/core';
 
 export type WizardStep = 'anchor' | 'blueprint' | 'alignment' | 'polish' | 'export';
 
-// Re-export for convenience
 export type JDParsed = JDParsedCore;
+
+export interface AlignmentState {
+  questions: AlignmentQuestion[];
+  currentQuestionIndex: number;
+  evidence: STARBullet[];
+  status: 'idle' | 'loading' | 'active' | 'done';
+  submittingQuestionId: string | null;
+}
+
+export interface PolishState {
+  resumeHTML: string;
+  editedSections: Record<string, string>;
+  pageFit: { currentPages: number; status: 'fit' | 'overflow' | 'underflow' } | null;
+  isChatOpen: boolean;
+}
 
 export interface WizardState {
   step: WizardStep;
@@ -15,6 +28,8 @@ export interface WizardState {
   selectedProjectId: string | null;
   projects: ProjectCard[];
   projectsLoading: 'idle' | 'loading' | 'done';
+  alignment: AlignmentState;
+  polish: PolishState;
   resumeHTML: string | null;
   canGoBack: boolean;
   canGoForward: boolean;
@@ -31,6 +46,19 @@ export function createWizardState(): WizardState {
     selectedProjectId: null,
     projects: [],
     projectsLoading: 'idle',
+    alignment: {
+      questions: [],
+      currentQuestionIndex: 0,
+      evidence: [],
+      status: 'idle',
+      submittingQuestionId: null,
+    },
+    polish: {
+      resumeHTML: '',
+      editedSections: {},
+      pageFit: null,
+      isChatOpen: true,
+    },
     resumeHTML: null,
     canGoBack: false,
     canGoForward: false,
@@ -46,7 +74,7 @@ export function canAdvanceFrom(state: WizardState): boolean {
   switch (state.step) {
     case 'anchor':    return state.jd !== null;
     case 'blueprint': return state.selectedProject !== null;
-    case 'alignment': return true;  // 对齐步骤允许跳过
+    case 'alignment': return true;
     case 'polish':    return true;
     default:          return false;
   }

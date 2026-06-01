@@ -6,3 +6,5 @@ export * from './adapter/useAdapter';
 export * from './shared';
 export * from './anchor';
 export * from './blueprint';
+export * from './alignment';
+export * from './polish';
