@@ -15,17 +15,24 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@resume-ci/core": "workspace:*"
+    "@resume-ci/core": "workspace:*",
+    "framer-motion": "^12.40.0",
+    "zustand": "^5.0.14"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "jsdom": "^29.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.0",
     "vitest": "^3.0.0"
   }
 }

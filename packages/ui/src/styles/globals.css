@@ -1,0 +1,18 @@
+/* packages/ui/src/styles/globals.css */
+@import "tailwindcss";
+
+:root {
+  --accent: #2563eb;
+  --accent-soft: #eaf1ff;
+  --ink: #141414;
+  --muted: #667085;
+  --hairline: #dbe2ea;
+  --panel: #f7f9fc;
+  --screen-bg: #eef2f7;
+}
+
+body {
+  background: var(--screen-bg);
+  color: var(--ink);
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+}
