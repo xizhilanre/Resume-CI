@@ -2,10 +2,8 @@
 import json
 import asyncio
 from fastapi import APIRouter, WebSocket
-from app.services.pipeline import PipelineService
 
 router = APIRouter()
-pipeline = PipelineService()
 
 # 活跃任务追踪（用于 cancel）
 active_tasks: dict[str, asyncio.Task] = {}
@@ -54,6 +52,7 @@ async def ws_handler(ws: WebSocket):
 
 async def execute_method(cmd_id: str, method: str, params: dict, ws: WebSocket):
     try:
+        pipeline = ws.app.state.pipeline
         handler = getattr(pipeline, method.replace(".", "_"))
         result = handler(**params)
 

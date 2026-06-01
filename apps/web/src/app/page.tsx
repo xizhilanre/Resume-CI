@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MockAdapter } from '@resume-ci/core';
 import {
   AdapterProvider, WizardShell,
@@ -13,7 +13,25 @@ import {
 } from '@resume-ci/ui';
 
 export default function Home() {
-  const adapter = useMemo(() => new MockAdapter(), []);
+  const [adapter, setAdapter] = useState<any>(null);
+
+  useEffect(() => {
+    const isRemote = new URLSearchParams(window.location.search).get('remote') !== null;
+
+    if (isRemote) {
+      import('../adapters/remote.adapter').then(({ RemoteAdapter }) => {
+        const a = new RemoteAdapter();
+        a.connect();
+        setAdapter(a);
+      });
+    } else {
+      setAdapter(new MockAdapter());
+    }
+  }, []);
+
+  if (!adapter) {
+    return <div className="flex items-center justify-center min-h-screen"><p className="text-slate-400">Loading...</p></div>;
+  }
 
   return (
     <AdapterProvider adapter={adapter}>
