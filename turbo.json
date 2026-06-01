@@ -14,8 +14,7 @@
     "dev": {
       "dependsOn": ["^build"],
       "persistent": true,
-      "cache": false,
-      "concurrency": 3
+      "cache": false
     },
     "test": {
       "dependsOn": [],
