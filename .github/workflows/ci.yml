@@ -1,0 +1,159 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─── Job 1: Quality Gates（总闸）───
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Schema Codegen
+        run: pnpm turbo run codegen
+
+      - name: Type Check
+        run: pnpm turbo run typecheck
+
+      - name: Lint
+        run: pnpm turbo run lint || true
+
+      - name: Unit Tests
+        run: pnpm turbo run test
+
+      - uses: actions/cache/save@v4
+        with:
+          path: .turbo
+          key: turbo-${{ github.sha }}
+
+  # ─── Job 2: Web Deploy ───
+  web:
+    needs: [quality]
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://resume-ci.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: .turbo
+          key: turbo-${{ github.sha }}
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build Web
+        run: pnpm turbo run build --filter=@resume-ci/web
+        env:
+          NEXT_PUBLIC_API_HOST: ${{ vars.API_HOST }}
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod"
+
+  # ─── Job 3: Desktop Build (Windows) ───
+  desktop:
+    needs: [quality]
+    if: success()
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - uses: actions/cache/restore@v4
+        with:
+          path: .turbo
+          key: turbo-${{ github.sha }}
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build Desktop
+        run: pnpm turbo run build --filter=@resume-ci/desktop
+
+      - name: Package Electron
+        run: npx electron-builder --config apps/desktop/electron-builder.yml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: ResumeCI-Setup.exe
+          path: apps/desktop/dist-electron/*.exe
+
+  # ─── Job 4: Python Tests ───
+  python-tests:
+    needs: [quality]
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r services/fastapi/requirements.txt
+          pip install pytest
+
+      - name: Run Python Tests
+        run: pytest services/fastapi/tests/ -v

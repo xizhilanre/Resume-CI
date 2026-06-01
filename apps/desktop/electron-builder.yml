@@ -1,0 +1,16 @@
+appId: com.resume-ci.desktop
+productName: Resume CI
+directories:
+  output: dist-electron
+  buildResources: resources
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: resources/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: true

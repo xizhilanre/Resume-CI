@@ -1,0 +1,27 @@
+{
+  "name": "@resume-ci/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist-electron/main/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'no desktop tests yet'"
+  },
+  "dependencies": {
+    "@resume-ci/core": "workspace:*",
+    "@resume-ci/ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "electron": "^34.0.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}
